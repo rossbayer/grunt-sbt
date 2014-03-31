@@ -11,3 +11,9 @@ project/plugins/project/
 
 # Scala-IDE specific
 .scala_dependencies
+
+# Node/Grunt 
+node_modules/
+
+.idea
+*.iml
