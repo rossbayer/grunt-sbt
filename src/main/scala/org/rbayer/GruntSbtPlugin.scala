@@ -48,7 +48,7 @@ object GruntSbtPlugin extends Plugin {
     /**
      * Setting for the path to the npm executable.
      *
-     * By default, this is <code>npm</code>, assumed to by on your $PATH.
+     * By default, this is <code>npm</code>, assumed to by on your PATH.
      */
     val gruntNpmPath = settingKey[String]("The path to the npm executable. " +
       "By default, the plugin will look for `npm` in the $PATH.")
