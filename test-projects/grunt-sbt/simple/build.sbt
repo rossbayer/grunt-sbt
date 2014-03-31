@@ -1,5 +1,3 @@
-import GruntKeys._
-
 name := "grunt-simple"
 
 version := "1.0"
@@ -15,7 +13,3 @@ scalacOptions in Test ++= Seq("-Yrangepos")
 resolvers ++= Seq("snapshots", "releases").map(Resolver.sonatypeRepo)
 
 gruntSettings
-
-gruntNodePath := "/usr/local/bin/node"
-
-gruntPath := "/usr/local/bin/grunt"
