@@ -212,10 +212,10 @@ object GruntSbtPlugin extends Plugin {
 
     val fullCmd = (Seq[String](nodePath, cmd) ++ args) filter { _.length > 0 } mkString " "
 
-    s map { _.log.debug(s"Executing grunt-sbt command: ${fullCmd}") }
+    s map { _.log.debug(s"Executing grunt-sbt command: $fullCmd, cwd: $cwd") }
 
-    val rc = Process(fullCmd, file(".")).!
+    val rc = Process(fullCmd, cwd).!
 
-    if (rc == 0) rc else sys.error(s"Grunt: ${cmd} generated non-zero return code: ${rc}")
+    if (rc == 0) rc else sys.error(s"Grunt: $cmd generated non-zero return code: $rc")
   }
 }
