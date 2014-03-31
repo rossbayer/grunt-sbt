@@ -8,14 +8,18 @@ Adding the Plugin
 
 First, add the plugin to your plugins.sbt file (coming soon):
 
-    addSbtPlugin("org.rbayer" % "grunt-sbt" % "1.0")
+```scala
+addSbtPlugin("org.rbayer" % "grunt-sbt" % "1.0")
+```
 
 If you want to use the latest version of the plugin directly from source
 control, add the following to your plugins.sbt file:
 
-    lazy val root = project.in(file(".")).dependsOn(gruntSbtPlugin)
+```scala
+lazy val root = project.in(file(".")).dependsOn(gruntSbtPlugin)
 
-    lazy val gruntSbtPlugin = uri("https://github.com/rossbayer/grunt-sbt.git")
+lazy val gruntSbtPlugin = uri("https://github.com/rossbayer/grunt-sbt.git")
+```
 
 Using the Plugin
 ================
@@ -24,15 +28,17 @@ By default, the plugin comes with a basic configuration that can be used for
 typical projects involving Grunt.js.  These settings can be referenced in your
 `build.sbt` file via the `gruntSettings` variable, like so:
 
-    name := "grunt-example"
+```scala
+name := "grunt-example"
 
-    version := "1.0"
+version := "1.0"
 
-    organization := "org.rbayer"
+organization := "org.rbayer"
 
-    scalaVersion := "2.10.3"
+scalaVersion := "2.10.3"
 
-    gruntSettings
+gruntSettings
+```
 
 Without modification, the settings defined in `gruntSettings` will add a
 `compile:grunt` task that will be invoked as part of `compile` and a
@@ -72,6 +78,7 @@ Settings
 To override or modify plugin settings, import the `GruntKeys` object as a
 package and modify keys as appropriate in your `build.sbt` file:
 
+```scala
     import GruntKeys._
 
     name := "grunt-example"
@@ -84,9 +91,10 @@ package and modify keys as appropriate in your `build.sbt` file:
 
     gruntSettings
 
-    gruntPath := /path/to/grunt-cli/bin/grunt
+    gruntPath := "/path/to/grunt-cli/bin/grunt"
 
     ...
+```
 
 The following settings are available for the plugin that can be overridden:
 
