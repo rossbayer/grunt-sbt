@@ -138,8 +138,9 @@ object GruntSbtPlugin extends Plugin {
     exec(
       gruntNodePath.value,
       gruntPath.value,
-      Seq(force) ++ gruntTasks.value,
-      Some(streams.value))
+      args = Seq(force) ++ gruntTasks.value,
+      cwd = thisProject.value.base,
+      s = Some(streams.value))
   }
 
   /**
@@ -147,11 +148,17 @@ object GruntSbtPlugin extends Plugin {
    * directory.
    */
   lazy val npmInstallTask: Def.Initialize[Task[Int]] = Def.task {
-    exec(
+    // Don't execute if no package.json is found in directory
+    val cwd = thisProject.value.base
+    val pkgFileExists = (cwd / "package.json").exists()
+
+    if (pkgFileExists) exec(
       gruntNodePath.value,
       gruntNpmPath.value,
-      Seq("install"),
-      Some(streams.value))
+      args = Seq("install"),
+      cwd = cwd,
+      s = Some(streams.value))
+    else 0
   }
 
   /**
@@ -163,7 +170,7 @@ object GruntSbtPlugin extends Plugin {
     val nodePath = extracted.getOpt(gruntNodePath).get
     val cmd = extracted.getOpt(gruntPath).get
 
-    exec(nodePath, cmd, Seq(task), None)
+    exec(nodePath, cmd, Seq(task))
 
     state
   }
@@ -196,12 +203,18 @@ object GruntSbtPlugin extends Plugin {
    *
    * @return The return code from the node process.
    */
-  private def exec(nodePath: String, cmd: String, args: Seq[String] = Seq(), s: Option[TaskStreams] = None):Int = {
+  private def exec(
+      nodePath: String,
+      cmd: String,
+      args: Seq[String] = Seq(),
+      cwd: File = file("."),
+      s: Option[TaskStreams] = None):Int = {
+
     val fullCmd = (Seq[String](nodePath, cmd) ++ args) filter { _.length > 0 } mkString " "
 
     s map { _.log.debug(s"Executing grunt-sbt command: ${fullCmd}") }
 
-    val rc = fullCmd.!
+    val rc = Process(fullCmd, file(".")).!
 
     if (rc == 0) rc else sys.error(s"Grunt: ${cmd} generated non-zero return code: ${rc}")
   }
