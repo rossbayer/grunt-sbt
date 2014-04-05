@@ -1,0 +1,33 @@
+# Clean everything first
+> clean
+
+# Start off with no npm modules installed
+$ delete node_modules
+
+# Test npm install works by itself
+> compile:npmInstall
+$ exists node_modules
+$ exists node_modules/grunt
+$ exists node_modules/grunt-contrib-concat
+$ exists node_modules/grunt-contrib-copy
+
+# Remove node_modules before compile to verify compile task dependencies
+$ delete node_modules
+
+# Verify generated files are added to managed files during `resources`
+> resources
+$ exists target/scala-2.10/resource_managed/main/META-INF/resources/grunt-simple/1.0
+$ exists target/scala-2.10/resource_managed/main/META-INF/resources/grunt-simple/1.0/math-lib.js
+$ exists target/scala-2.10/resource_managed/main/META-INF/resources/grunt-simple/1.0/scripts/files/add.js
+$ exists target/scala-2.10/resource_managed/main/META-INF/resources/grunt-simple/1.0/scripts/files/subtract.js
+
+# verify build occurs before a test task is executed
+> clean
+> test
+$ exists target/scala-2.10/resource_managed/main/META-INF/resources/grunt-simple/1.0
+
+# verify a non-existent task fails build
+- > testfailure:grunt
+
+# verify the force option ignores errors
+> testforce:grunt

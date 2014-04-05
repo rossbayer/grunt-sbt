@@ -1,3 +1,6 @@
+import org.rbayer.GruntSbtPlugin._
+import GruntKeys._
+
 name := "grunt-simple"
 
 version := "1.0"
@@ -13,3 +16,5 @@ scalacOptions in Test ++= Seq("-Yrangepos")
 resolvers ++= Seq("snapshots", "releases").map(Resolver.sonatypeRepo)
 
 gruntSettings
+
+(gruntResourcesClasspath in Compile) := file("META-INF/resources") / name.value / version.value
