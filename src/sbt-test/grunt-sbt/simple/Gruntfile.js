@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -30,9 +32,14 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask("build", ['concat', 'copy']);
+  grunt.registerTask('build', ['concat', 'copy']);
 
-  grunt.registerTask("test", function() {
-    grunt.log.writeln("Grunt test success!");
+  grunt.registerTask('test', function() {
+    if(!fs.existsSync('target/grunt/math-lib.js')) {
+        grunt.fatal('build task has not been executed before test.')
+    }
+    else {
+        grunt.log.writeln('Grunt test success!');
+    }
   });
 };

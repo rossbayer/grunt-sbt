@@ -18,3 +18,12 @@ resolvers ++= Seq("snapshots", "releases").map(Resolver.sonatypeRepo)
 gruntSettings
 
 (gruntResourcesClasspath in Compile) := file("META-INF/resources") / name.value / version.value
+
+gruntSettingsIn(config("testfailure"), Seq(
+  (gruntTasks in config("testfailure")) := Seq("nope")
+))
+
+gruntSettingsIn(config("testforce"), Seq(
+  gruntForce := true,
+  (gruntTasks in config("testforce")) := Seq("nope")
+))

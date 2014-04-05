@@ -1,1 +1,1 @@
-addSbtPlugin("org.rbayer" % "grunt-sbt" % "1.0")
+addSbtPlugin("org.rbayer" % "grunt-sbt" % System.getProperty("plugin.version"))
