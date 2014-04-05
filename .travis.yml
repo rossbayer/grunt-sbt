@@ -1,0 +1,9 @@
+language: scala
+script: sbt scripted
+branches:
+  only:
+    - master
+notifications:
+  email:
+    recipients:
+      - rossbayer@gmail.com
