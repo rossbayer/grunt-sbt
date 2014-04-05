@@ -17,6 +17,12 @@ resolvers ++= Seq("snapshots", "releases").map(Resolver.sonatypeRepo)
 
 gruntSettings
 
+// Configure grunt to run from local copy using the `node` interpreter directly.
+
+gruntPath := "node_modules/grunt-cli/bin/grunt"
+
+//gruntNodePath := "node"
+
 (gruntResourcesClasspath in Compile) := file("META-INF/resources") / name.value / version.value
 
 gruntSettingsIn(config("testfailure"), Seq(
