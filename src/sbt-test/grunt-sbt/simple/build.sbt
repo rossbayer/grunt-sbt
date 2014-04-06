@@ -21,7 +21,7 @@ gruntSettings
 
 gruntPath := "node_modules/grunt-cli/bin/grunt"
 
-//gruntNodePath := "node"
+gruntResourcesDirectory in Compile := Some(target.value / "grunt")
 
 (gruntResourcesClasspath in Compile) := file("META-INF/resources") / name.value / version.value
 

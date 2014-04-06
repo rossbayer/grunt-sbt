@@ -92,8 +92,7 @@ object GruntSbtPlugin extends Plugin {
       gruntTasks := Seq("build"),
       npmInstall <<= npmInstallTask,
       resourceGenerators in Compile <+= gruntTask,
-      (resources in Compile) <<= (resources in Compile) dependsOn (npmInstall in Compile),
-      gruntResourcesDirectory := Some(target.value / "grunt")
+      (resources in Compile) <<= (resources in Compile) dependsOn (npmInstall in Compile)
     )) ++
     gruntSettingsIn(Test, Seq(
       gruntTasks := Seq("test"),
