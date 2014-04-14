@@ -8,7 +8,7 @@ An sbt plugin for adding Grunt.js to your sbt build.
 Adding the Plugin
 =================
 
-First, add the plugin to your plugins.sbt file (coming soon):
+First, add the plugin to your plugins.sbt file:
 
 ```scala
 addSbtPlugin("org.rbayer" % "grunt-sbt" % "1.0")
@@ -31,6 +31,9 @@ typical projects involving Grunt.js.  These settings can be referenced in your
 `build.sbt` file via the `gruntSettings` variable, like so:
 
 ```scala
+import org.rbayer.GruntSbtPlugin._
+import GruntKeys._
+
 name := "grunt-example"
 
 version := "1.0"
@@ -40,6 +43,7 @@ organization := "org.rbayer"
 scalaVersion := "2.10.3"
 
 gruntSettings
+
 ```
 
 Without modification, the settings defined in `gruntSettings` will add a
@@ -59,9 +63,9 @@ directory to install any NPM package dependencies defined in `package.json`.
 By default, this will be executed when `resources` is run.  If no
 `package.json` file is found in the current project's base directory,
 this task will simply exit.
-- `grunt` (As a `resourceGenerator`) - Executes grunt tasks associated 
+- `compile:grunt` (As a `resourceGenerator`) - Executes grunt tasks associated 
 with the `Compile` configuration.  By default, the `build` task will be 
-executed in your `Gruntfile` during the `resources` task.
+executed in your `Gruntfile` during the `resources` task of `Compile`.
 - `test:grunt` - Executes grunt tasks associated with the `Test`
 configuration.  By default, the `test` task will be executed in your
 `Gruntfile`.
@@ -80,10 +84,11 @@ in your current sbt console session.  Example:
 Settings
 --------
 
-To override or modify plugin settings, import the `GruntKeys` 
+To override or modify plugin settings, import `GruntKeys` 
 and modify keys as appropriate in your `build.sbt` file:
 
 ```scala
+import org.rbayer.GruntSbtPlugin._
 import GruntKeys._
 
 name := "grunt-example"
@@ -117,6 +122,7 @@ The following settings are available for the plugin that can be overridden:
 Here are some example customizations to give an idea of how your Grunt build can be integrated into sbt:
 
 ```scala
+import org.rbayer.GruntSbtPlugin._
 import GruntKeys._
 
 name := "grunt-example"
@@ -143,4 +149,3 @@ gruntTasks in Compile := Seq("jshint", "concat", "uglify")
 gruntResourcesClasspath in Compile := file("META-INF/resources") / name.value / version.value
 
 ```
-
